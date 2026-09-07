@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Digital Clock</title>
+    <style>
+        /* Centers the clock perfectly on the screen */
+        body {
+            background-color: #0f172a;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Styles the container box */
+        .clock-container {
+            text-align: center;
+            background: #1e293b;
+            padding: 30px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid #334155;
+        }
+
+        /* Large glowing numbers */
+        #clock {
+            font-size: 4rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="clock-container">
+        <div id="clock">00:00:00 AM</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            // Get current time from the device
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+
+            // Convert to 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+
+            // Add leading zeros to numbers less than 10
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            // Combine the string and inject it into the HTML
+            const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // Call the function immediately to avoid a 1-second delay on page load
+        updateClock();
+
+        // Update the clock every 1000 milliseconds (1 second)
+        setInterval(updateClock, 1000);
+    </script>
+
+</body>
+</html>
